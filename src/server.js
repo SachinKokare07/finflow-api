@@ -11,7 +11,7 @@ const startServer = async () => {
 
   const server = app.listen(PORT, () => {
     logger.info(`FinFlow API running on port ${PORT} in ${process.env.NODE_ENV || 'development'} mode`);
-    logger.info(`Health check: http://localhost:${PORT}/health`);
+    logger.info(`Health check: https://finflow-api-90cp.onrender.com/health`);
   });
 
   const shutdown = (signal) => {
