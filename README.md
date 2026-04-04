@@ -116,12 +116,12 @@ npm run seed
 npm run dev
 ```
 
-The API will be running at `http://localhost:5000`.
+The API will be running at `https://finflow-api-90cp.onrender.com`.
 
 ### Health Check
 
 ```
-GET http://localhost:5000/health
+GET https://finflow-api-90cp.onrender.com/health
 ```
 
 ---
