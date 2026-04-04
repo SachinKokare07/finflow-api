@@ -2,6 +2,11 @@
 
 A production-ready **Finance Dashboard Backend** built with Node.js, Express, and MongoDB. Supports role-based access control, financial record management, and aggregated dashboard analytics.
 
+## Live Deployments
+
+- Frontend: https://finflow-api.vercel.app/login
+- Backend: https://finflow-api-90cp.onrender.com
+
 ---
 
 ## Table of Contents
