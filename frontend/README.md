@@ -23,6 +23,19 @@ npm run dev
 
 - `VITE_API_URL` defaults to `https://finflow-api-90cp.onrender.com`
 
+## Deploy On Vercel
+
+1. Push the `frontend/` folder to GitHub with the rest of the repo.
+2. Import the repository in Vercel.
+3. Set the root directory to `frontend`.
+4. Set the build command to `npm run build`.
+5. Set the output directory to `dist`.
+6. Add an environment variable:
+	- `VITE_API_URL = https://finflow-api-90cp.onrender.com`
+7. Deploy.
+
+The included [vercel.json](vercel.json) keeps React Router routes working on refresh.
+
 ## Backend Notes
 
 The app expects the API contract described in [backend/README.md](../backend/README.md).
