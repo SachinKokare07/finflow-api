@@ -79,8 +79,8 @@ export const DashboardPage = () => {
     <div className="space-y-6">
       <SectionHeader
         eyebrow="Overview"
-        title="Financial control tower"
-        description="Monitor cash flow, savings performance, and recent activity from the deployed FinFlow backend."
+        title="Finance snapshot"
+        description="Read income, expense, and momentum signals from recent activity and historical trend data."
       />
 
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
@@ -119,7 +119,7 @@ export const DashboardPage = () => {
           <div className="flex items-center justify-between gap-4">
             <div>
               <div className="subtle-label">Trend line</div>
-              <h2 className="mt-2 text-xl font-semibold text-white">Monthly income vs expense</h2>
+              <h2 className="mt-2 text-xl font-semibold text-white">Monthly cash movement</h2>
             </div>
             <Badge tone="info">Past 6 months</Badge>
           </div>
@@ -148,7 +148,7 @@ export const DashboardPage = () => {
             ) : (
               <EmptyState
                 title="No trend data"
-                description="Create transactions spanning multiple months to unlock the trend chart."
+                description="Add records across different months to populate this chart."
               />
             )}
           </div>
@@ -157,7 +157,7 @@ export const DashboardPage = () => {
         <div className="space-y-6">
           <Card className="p-6">
             <div className="subtle-label">Weekly comparison</div>
-            <h2 className="mt-2 text-xl font-semibold text-white">This week vs last week</h2>
+            <h2 className="mt-2 text-xl font-semibold text-white">Week-over-week totals</h2>
             {weekly ? (
               <div className="mt-6 space-y-4 text-sm">
                 <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
@@ -186,7 +186,7 @@ export const DashboardPage = () => {
 
           <Card className="p-6">
             <div className="subtle-label">Top categories</div>
-            <h2 className="mt-2 text-xl font-semibold text-white">Expense breakdown</h2>
+            <h2 className="mt-2 text-xl font-semibold text-white">Highest spend categories</h2>
             <div className="mt-5 space-y-3">
               {categories.slice(0, 5).map((category) => (
                 <div key={category.category} className="rounded-2xl border border-white/10 bg-white/5 p-4">
@@ -210,7 +210,7 @@ export const DashboardPage = () => {
         <div className="flex items-center justify-between gap-4">
           <div>
             <div className="subtle-label">Recent activity</div>
-            <h2 className="mt-2 text-xl font-semibold text-white">Latest transactions</h2>
+            <h2 className="mt-2 text-xl font-semibold text-white">Recent entries</h2>
           </div>
           <Badge tone="neutral">{recent.length} shown</Badge>
         </div>
@@ -244,7 +244,7 @@ export const DashboardPage = () => {
 
         {!recent.length ? (
           <div className="mt-6">
-            <EmptyState title="No recent activity" description="Your latest transactions will appear here once data is added." />
+            <EmptyState title="No recent activity" description="Recent records will show up here after transactions are added." />
           </div>
         ) : null}
       </Card>

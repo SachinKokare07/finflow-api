@@ -1,268 +1,67 @@
-# FinFlow API
+# FinFlow Workspace
 
-A production-ready **Finance Dashboard Backend** built with Node.js, Express, and MongoDB. Supports role-based access control, financial record management, and aggregated dashboard analytics.
+FinFlow is a full-stack finance tracking project with role-based access.
+The repository is split into two deployable apps:
 
-## Live Deployments
+- `backend/`: Express + MongoDB API
+- `frontend/`: React + Vite client
+
+## Live Environment
 
 - Frontend: https://finflow-api.vercel.app/login
 - Backend: https://finflow-api-90cp.onrender.com
 
----
+## What This Project Covers
 
-## Table of Contents
+- JWT authentication with role-aware route protection
+- Transaction lifecycle: create, read, update, soft-delete
+- Analytics endpoints for summary, trends, and category grouping
+- User administration for role and activation management
+- Automated tests for key backend workflows
 
-- [Tech Stack](#tech-stack)
-- [Architecture](#architecture)
-- [Getting Started](#getting-started)
-- [Environment Variables](#environment-variables)
-- [Seeding the Database](#seeding-the-database)
-- [API Reference](#api-reference)
-  - [Auth](#auth-endpoints)
-  - [Transactions](#transaction-endpoints)
-  - [Dashboard](#dashboard-endpoints)
-  - [Users](#user-endpoints)
-- [Role Permissions Matrix](#role-permissions-matrix)
-- [Error Handling](#error-handling)
-- [Running Tests](#running-tests)
-- [Design Decisions & Assumptions](#design-decisions--assumptions)
+## Repository Layout
 
----
-
-## Tech Stack
-
-| Layer        | Technology                          |
-|--------------|-------------------------------------|
-| Runtime      | Node.js 18+                         |
-| Framework    | Express 4                           |
-| Database     | MongoDB + Mongoose                  |
-| Auth         | JWT (jsonwebtoken)                  |
-| Validation   | express-validator                   |
-| Security     | helmet, cors, express-rate-limit    |
-| Logging      | winston, morgan                     |
-| Testing      | Jest + Supertest                    |
-
----
-
-## Architecture
-
-```
-src/
-├── config/
-│   └── db.js                  # MongoDB connection with retry logic
-├── controllers/
-│   ├── authController.js      # Thin layer — delegates to services
-│   ├── transactionController.js
-│   ├── dashboardController.js
-│   └── userController.js
-├── middlewares/
-│   ├── auth.js                # authenticate (JWT) + authorize (RBAC)
-│   ├── errorHandler.js        # Global error handler + 404 handler
-│   ├── rateLimiter.js         # Per-route rate limiting
-│   └── validate.js            # express-validator result runner
-├── models/
-│   ├── User.js                # User schema with bcrypt pre-save hook
-│   └── Transaction.js         # Transaction schema with soft delete
-├── routes/
-│   ├── authRoutes.js
-│   ├── transactionRoutes.js
-│   ├── dashboardRoutes.js
-│   └── userRoutes.js
-├── services/
-│   ├── authService.js         # Business logic for auth
-│   ├── transactionService.js  # CRUD + filter builder
-│   ├── dashboardService.js    # MongoDB aggregation pipelines
-│   └── userService.js         # User management logic
-├── utils/
-│   ├── helpers.js             # AppError class, catchAsync, sendSuccess
-│   ├── logger.js              # Winston logger
-│   └── seeder.js              # Database seeder
-├── validators/
-│   ├── authValidators.js
-│   ├── transactionValidators.js
-│   └── userValidators.js
-├── app.js                     # Express app setup (no listen call)
-└── server.js                  # DB connect + graceful shutdown
+```text
+finflow-api/
+  backend/   # API, business logic, tests, seeding
+  frontend/  # SPA client, guarded routes, dashboard views
 ```
 
-**Request flow:**
-```
-Request → Rate Limiter → Auth Middleware → RBAC Middleware → Validator → Controller → Service → Model → MongoDB
-                                                                                         ↓
-                                                                               Global Error Handler
-```
+## Quick Start
 
----
-
-## Getting Started
-
-### Prerequisites
-
-- Node.js 18+
-- MongoDB running locally or a MongoDB Atlas connection string
-
-### Installation
+1. Install backend dependencies and run API:
 
 ```bash
-# 1. Clone the repository
-git clone https://github.com/SachinKokare07/finflow-api
-cd finflow-api
-
-# 2. Install dependencies
+cd backend
 npm install
-
-# 3. Set up environment
 cp .env.example .env
-# Edit .env with your MongoDB URI and JWT secret
-
-# 4. Seed the database with sample data
 npm run seed
-
-# 5. Start the development server
 npm run dev
 ```
 
-The API will be running at `https://finflow-api-90cp.onrender.com`.
-
-### Health Check
-
-```
-GET https://finflow-api-90cp.onrender.com/health
-```
-
----
-
-## Environment Variables
-
-| Variable               | Required | Default       | Description                         |
-|------------------------|----------|---------------|-------------------------------------|
-| `PORT`                 | No       | `5000`        | Server port                         |
-| `NODE_ENV`             | No       | `development` | Environment (`development`, `production`, `test`) |
-| `MONGO_URI`            | Yes      | —             | MongoDB connection string            |
-| `JWT_SECRET`           | Yes      | —             | Secret key for signing JWTs          |
-| `JWT_EXPIRES_IN`       | No       | `7d`          | JWT expiration (e.g. `1d`, `7d`)    |
-| `RATE_LIMIT_WINDOW_MS` | No       | `900000`      | Rate limit window in ms (15 min)    |
-| `RATE_LIMIT_MAX`       | No       | `100`         | Max requests per window per IP      |
-| `CORS_ORIGIN`          | No       | `*`           | Allowed CORS origin(s)              |
-
----
-
-## Seeding the Database
+2. In a separate terminal, install and run frontend:
 
 ```bash
-npm run seed
+cd frontend
+npm install
+npm run dev
 ```
 
-Creates 3 users and ~70 realistic transactions across 6 months:
+## Where To Read Next
 
-| Role    | Email                  | Password       |
-|---------|------------------------|----------------|
-| admin   | admin@finflow.com      | Admin@1234     |
-| analyst | analyst@finflow.com    | Analyst@1234   |
-| viewer  | viewer@finflow.com     | Viewer@1234    |
+- API details and endpoint examples: `backend/README.md`
+- Frontend routes, build, and deployment notes: `frontend/README.md`
 
----
+## Demo Credentials (Seed Data)
 
-## API Reference
+- admin@finflow.com / Admin@1234
+- analyst@finflow.com / Analyst@1234
+- viewer@finflow.com / Viewer@1234
 
-All endpoints are prefixed with `/api`. Protected routes require:
+## Notes
 
-```
-Authorization: Bearer <your_jwt_token>
-```
-
----
-
-### Auth Endpoints
-
-#### Register
-
-```
-POST /api/auth/register
-```
-
-**Body:**
-
-```json
-{
-  "name": "Jane Doe",
-  "email": "jane@example.com",
-  "password": "Secure@1234",
-  "role": "analyst"
-}
-```
-
-`role` is optional. Defaults to `viewer`. Accepted values: `viewer`, `analyst`, `admin`.
-
-**Response `201`:**
-
-```json
-{
-  "success": true,
-  "message": "Account created successfully.",
-  "token": "eyJhbGci...",
-  "user": { "_id": "...", "name": "Jane Doe", "email": "jane@example.com", "role": "analyst" }
-}
-```
-
----
-
-#### Login
-
-```
-POST /api/auth/login
-```
-
-**Body:**
-
-```json
-{
-  "email": "jane@example.com",
-  "password": "Secure@1234"
-}
-```
-
-**Response `200`:**
-
-```json
-{
-  "success": true,
-  "message": "Login successful.",
-  "token": "eyJhbGci...",
-  "user": { ... }
-}
-```
-
----
-
-#### Get My Profile
-
-```
-GET /api/auth/me
-```
-
-**Auth required.** Returns the currently authenticated user's profile.
-
----
-
-### Transaction Endpoints
-
-#### List Transactions
-
-```
-GET /api/transactions
-```
-
-**Auth required.** Accessible by all roles.
-
-**Query Parameters:**
-
-| Param       | Type   | Description                                 |
-|-------------|--------|---------------------------------------------|
-| `page`      | int    | Page number (default: 1)                    |
-| `limit`     | int    | Items per page (default: 10, max: 100)      |
-| `type`      | string | Filter by `income` or `expense`             |
-| `category`  | string | Filter by category (e.g. `salary`, `rent`)  |
-| `startDate` | ISO date | Filter from date                          |
+- API base path is `/api`.
+- The backend includes a `/health` route for availability checks.
 | `endDate`   | ISO date | Filter to date                            |
 | `minAmount` | float  | Minimum amount filter                       |
 | `maxAmount` | float  | Maximum amount filter                       |

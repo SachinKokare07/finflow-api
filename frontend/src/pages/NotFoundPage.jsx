@@ -7,7 +7,7 @@ export const NotFoundPage = () => (
       <div className="subtle-label">404</div>
       <h1 className="mt-4 font-display text-4xl font-bold text-white">Page not found</h1>
       <p className="mt-4 text-sm leading-6 text-slate-400">
-        The requested route does not exist in this FinFlow frontend.
+        This route is not available. Head back to transactions to continue.
       </p>
       <div className="mt-8">
         <Button as={Link} to="/app/transactions">

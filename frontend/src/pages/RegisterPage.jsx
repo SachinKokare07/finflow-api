@@ -45,7 +45,7 @@ export const RegisterPage = () => {
   return (
     <AuthFrame
       title="Create your FinFlow account"
-      subtitle="Start with a viewer profile, or create an analyst/admin account when your backend seed data and permissions allow it."
+      subtitle="Register a new user profile and choose the role that matches the level of access you want to test or operate with."
       footerText="Already have an account?"
       footerLink="/login"
       footerLinkLabel="Sign in"
@@ -75,7 +75,7 @@ export const RegisterPage = () => {
             required
           />
         </Field>
-        <Field label="Password" hint="8+ chars, uppercase, lowercase, and a number">
+        <Field label="Password" hint="Use at least 8 characters with upper/lowercase letters and a number">
           <input
             className="input"
             type="password"

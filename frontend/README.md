@@ -1,16 +1,17 @@
 # FinFlow Frontend
 
-A polished React + Tailwind client for the deployed FinFlow API.
+React client for the FinFlow API.
 
-## Features
+## What The App Includes
 
-- JWT login and registration
-- Role-aware navigation for viewer, analyst, and admin users
-- Dashboard analytics with summary cards, trend bars, and recent activity
-- Transaction listing, filters, create/edit/delete flows
-- Admin user management and profile/password actions
+- Authentication screens (login + registration)
+- Protected routing by role (`viewer`, `analyst`, `admin`)
+- Transaction browser with filtering and pagination
+- Dashboard insights for analyst/admin accounts
+- User management tools for admins
+- Profile and password update screens
 
-## Setup
+## Run Locally
 
 ```bash
 cd frontend
@@ -19,28 +20,35 @@ cp .env.example .env
 npm run dev
 ```
 
+Default dev URL: `http://localhost:5173`
+
 ## Environment
 
-- `VITE_API_URL` defaults to `https://finflow-api-90cp.onrender.com`
+- `VITE_API_URL` should point to the backend server
+- If omitted, app uses `https://finflow-api-90cp.onrender.com`
 
-## Deploy On Vercel
+## Production Build
 
-1. Push the `frontend/` folder to GitHub with the rest of the repo.
-2. Import the repository in Vercel.
-3. Set the root directory to `frontend`.
-4. Set the build command to `npm run build`.
-5. Set the output directory to `dist`.
-6. Add an environment variable:
-	- `VITE_API_URL = https://finflow-api-90cp.onrender.com`
-7. Deploy.
+```bash
+npm run build
+npm run preview
+```
 
-The included [vercel.json](vercel.json) keeps React Router routes working on refresh.
+## Deploying To Vercel
 
-## Backend Notes
+1. Import the repository in Vercel.
+2. Select `frontend` as the root directory.
+3. Keep build command: `npm run build`.
+4. Keep output directory: `dist`.
+5. Configure env var: `VITE_API_URL=https://finflow-api-90cp.onrender.com`.
 
-The app expects the API contract described in [backend/README.md](../backend/README.md).
+`vercel.json` already includes SPA rewrite behavior for React Router refreshes.
 
-Seeded demo credentials:
+## API Contract
+
+Expected backend behavior and endpoints are documented in `../backend/README.md`.
+
+## Demo Accounts
 
 - `admin@finflow.com` / `Admin@1234`
 - `analyst@finflow.com` / `Analyst@1234`

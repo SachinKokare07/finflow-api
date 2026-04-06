@@ -59,7 +59,7 @@ export const ProfilePage = () => {
       <SectionHeader
         eyebrow="Profile"
         title="Your account"
-        description="Keep your personal details and password current while the backend enforces self-service access rules."
+        description="Manage your identity details and security credentials from one account settings page."
       />
 
       {message ? <div className="rounded-2xl border border-emerald-400/20 bg-emerald-400/10 px-4 py-3 text-sm text-emerald-100">{message}</div> : null}

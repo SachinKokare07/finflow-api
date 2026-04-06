@@ -43,8 +43,8 @@ export const LoginPage = () => {
 
   return (
     <AuthFrame
-      title="Sign in to FinFlow"
-      subtitle="Access the live dashboard, review transactions, and manage users through a single polished interface connected to the deployed backend."
+      title="Welcome back"
+      subtitle="Sign in to continue tracking spend patterns, cash flow, and account activity in your FinFlow workspace."
       footerText="Need an account?"
       footerLink="/register"
       footerLinkLabel="Create one"
@@ -87,7 +87,7 @@ export const LoginPage = () => {
       </form>
 
       <div className="mt-6 rounded-2xl border border-white/10 bg-white/5 p-4 text-sm text-slate-300">
-        Demo accounts seeded in the backend: admin@finflow.com, analyst@finflow.com, viewer@finflow.com.
+        Quick access accounts: admin@finflow.com, analyst@finflow.com, viewer@finflow.com.
       </div>
     </AuthFrame>
   );

@@ -154,7 +154,7 @@ export const TransactionsPage = () => {
       <SectionHeader
         eyebrow="Records"
         title="Transactions"
-        description="Search, filter, create, update, and soft-delete transaction records through the live backend."
+        description="Browse and manage transaction history with filters, paging, and role-aware edit controls."
         actions={[
           <Badge key="scope" tone="neutral">
             {canManage ? 'Create enabled' : 'Read-only access'}
@@ -233,7 +233,7 @@ export const TransactionsPage = () => {
 
           {!loading && !transactions.length ? (
             <div className="mt-6">
-              <EmptyState title="No transactions found" description="Try different filters or add your first transaction." />
+              <EmptyState title="No transactions found" description="Adjust filters or create a new entry to get started." />
             </div>
           ) : null}
 
@@ -352,7 +352,7 @@ export const TransactionsPage = () => {
             <div className="subtle-label">Access</div>
             <h2 className="mt-2 text-xl font-semibold text-white">Viewer mode</h2>
             <p className="mt-4 text-sm leading-6 text-slate-400">
-              This account can inspect transaction history but cannot create, update, or delete records.
+              This role can review records only. Create, edit, and delete actions are restricted to analyst/admin users.
             </p>
           </Card>
         )}

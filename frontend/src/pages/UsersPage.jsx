@@ -102,7 +102,7 @@ export const UsersPage = () => {
       <SectionHeader
         eyebrow="Administration"
         title="Users"
-        description="Manage platform access, activation state, and profile details for the FinFlow user base."
+        description="Control account roles, active state, and profile metadata for team members."
       />
 
       {error ? (
@@ -180,7 +180,7 @@ export const UsersPage = () => {
           <div className="subtle-label">Editor</div>
           <h2 className="mt-2 text-xl font-semibold text-white">{selectedId ? 'Update user' : 'Select a user'}</h2>
           <p className="mt-3 text-sm leading-6 text-slate-400">
-            Edit role, activation state, or name. Non-admin rules are enforced by the backend, so this panel keeps the same form contract.
+            Update role, activation status, or display name. Permission boundaries are still validated server-side.
           </p>
 
           {selectedId ? (
@@ -212,7 +212,7 @@ export const UsersPage = () => {
             </form>
           ) : (
             <div className="mt-6 rounded-2xl border border-dashed border-white/10 bg-white/5 px-5 py-8 text-sm text-slate-400">
-              Select a user from the table to edit their profile and role.
+              Pick a user from the list to load their editable fields.
             </div>
           )}
         </Card>
